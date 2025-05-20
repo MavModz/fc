@@ -43,10 +43,10 @@ const router = useRouter();
 
 useHead({
   link: [
-    { rel: 'stylesheet', href: '/css/bootstrap/style.css' }
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' },
   ],
   script: [
-    { src: '/js/bootstrap/script.js', body: true }
+    { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', body: true }
   ]
 });
 
@@ -98,12 +98,3 @@ export default {
 };
 </script>
 
-<style>
-@import url('./public/css/primevue/style.css');
-@import url('./public/css/AppCss/cropper.css');
-@import url('./public/css/AppCss/formkitCustom.css');
-@import url('./public/css/AppCss/icon.css');
-@import url('./public/css/AppCss/primeVueCustom.css');
-@import url('./public/css/AppCss/font.css');
-@import url('./public/css/AppCss/style.css');
-</style>

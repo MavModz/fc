@@ -20,84 +20,72 @@
 <script setup lang="ts">
 import type { CredentialResponse } from "vue3-google-signin";
 import { GoogleSignInButton, decodeCredential } from "vue3-google-signin";
-import { onMounted, ref } from 'vue';
-</script>
-
-
-<script lang="ts">
-import type { CredentialResponse } from "vue3-google-signin";
-import { GoogleSignInButton, decodeCredential } from "vue3-google-signin";
+import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 
-export default {
-  data() {
-    return {
-      visible: false,
-    }
-  },
-  methods: {
-    async handleLoginSuccess(response: any) {
-      const { credential } = response;
-      const decodedCredential = decodeCredential(credential);
-      await this.callback({ ...decodedCredential });
-    },
-    async callback(userData: { email: string; name: string }) {
+const router = useRouter();
+const route = useRoute();
+const visible = ref(false);
+const isLoggedIn = ref(false);
 
-      const data = {
-        email: userData.email,
-        name: userData.name,
-      };
-      // await this.login(data)
+const setCookie = (name: string, value: string, days: number): void => {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+};
 
-      this.visible = true
-      await homePost('/google-signin', data).then(r => {
-        localStorage.setItem("token", r.data.token);
-        useNuxtApp().token = r.data.token
-        this.setCookie('token', r.data.token, 180);
+const handleLogout = (): void => {
+  localStorage.removeItem("token");
+  setCookie('token', '', -1);
+  isLoggedIn.value = false;
+  router.replace('/');
+};
 
+const handleLoginSuccess = async (response: CredentialResponse): Promise<void> => {
+  const { credential } = response;
+  const decodedCredential = decodeCredential(credential);
+  await callback({ ...decodedCredential });
+  isLoggedIn.value = true;
+};
 
-        if (this.$route.query.fromaddlisting) {
-          const role = r.data.user.role || '';
-          if (role === 'Admin') {
-            // Redirect Admin to Categories
-            this.$router.replace('/admin/categories');
-          } else {
-            // Redirect other users to their profile
-            if(r?.data?.isUser) {
-              this.$router.replace('/user/profile');
-            } else {
-              this.$router.replace(`/${role.toLowerCase()}/profile?newUser=true`);
-            }
-          }
+const callback = async (userData: { email: string; name: string }): Promise<void> => {
+  const data = {
+    email: userData.email,
+    name: userData.name,
+  };
+
+  visible.value = true;
+  try {
+    const response = await homePost('/google-signin', data);
+    if (response?.data?.token && typeof response.data.token === 'string') {
+      localStorage.setItem("token", response.data.token);
+      useNuxtApp().token = response.data.token;
+      setCookie('token', response.data.token, 180);
+
+      if (route.query.fromaddlisting) {
+        const role = response.data.user?.role || '';
+        if (role === 'Admin') {
+          router.replace('/admin/categories');
         } else {
-          // Handle default redirection for new and existing users
-          if (r.data.isUser) {
-            this.$router.replace(`/${r.data.user.role.toLowerCase()}/dashboard`);
+          if(response.data.isUser) {
+            router.replace('/user/profile');
           } else {
-            this.$router.replace(`/${r.data.user.role.toLowerCase()}/profile?newUser=true`);
+            router.replace(`/${role.toLowerCase()}/profile?newUser=true`);
           }
         }
-
-        // if (r.data.isUser) {
-        //   this.$router.replace(`/${r.data.user.role.toLowerCase()}/dashboard`)
-        // } else {
-        //   this.$router.replace(`/${r.data.user.role.toLowerCase()}/profile?newUser=true`)
-        // }
-        // location.replace('/');
-      }).catch(error => {
-        console.error(error)
-      });
-      this.visible = false
-
-    },
-
-    setCookie(name, value, days) {
-      let date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      let expires = "expires=" + date.toUTCString();
-      document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    },
-
+      } else {
+        if (response.data.isUser) {
+          router.replace(`/${response.data.user.role.toLowerCase()}/dashboard`);
+        } else {
+          router.replace(`/${response.data.user.role.toLowerCase()}/profile?newUser=true`);
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    visible.value = false;
   }
-}
+};
 </script>

@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       // DIGILOCKER_URI: process.env.DIGILOCKER_URI,
       PLAN_PRICE: process.env.PLAN_PRICE,
       baseURL: process.env.BASE_URL,
-      appPrice:process.env.WHITELEVELAPP_PRICE
+      appPrice: process.env.WHITELEVELAPP_PRICE
     },
     private: {
       STATE: process.env.STATE,
@@ -36,7 +36,7 @@ export default defineNuxtConfig({
       TXN: process.env.TXN,
       CLIENT_ID: process.env.CLIENT_ID,
       DIGILOCKER_URI: process.env.DIGILOCKER_URI,
-      
+
     }
   },
 
@@ -71,7 +71,19 @@ export default defineNuxtConfig({
     },
     staticFilename: '[publicPath]/svg-new-img/[name][ext]', // Use static file for SVGs
   },
-  css: ['~/assets/css/global.css'],
-
+  css: ['~/assets/css/global.css',
+    '~/assets/css/font.css',
+    '~/assets/css/primevue-custom.css',
+    '~/assets/css/style.css',
+    '~/assets/css/formKitCustom.css'
+  ],
+  head: {
+    link: [
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' },
+    ],
+    script: [
+      { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', body: true },
+    ],
+  },
 
 })

@@ -9,9 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import '@/public/css/primevue/style.css'
-import '@/public/css/AppCss/primeVueCustom.css'
-import '@/public/css/AppCss/style.css'
 import { ref, onMounted, watch } from 'vue';
 import HomeHeader from '~/components/Home/Header/HomeHeader.vue';
 import AppFooter from '~/components/Home/Footer/AppFooter.vue';
