@@ -96,7 +96,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            'vendor': ['vue', 'vue-router'],
+            // 'vendor': ['vue', 'vue-router'],
           },
           chunkFileNames: 'js/[name]-[hash].js',
           entryFileNames: 'js/[name]-[hash].js',
