@@ -77,13 +77,64 @@ export default defineNuxtConfig({
     '~/assets/css/style.css',
     '~/assets/css/formKitCustom.css'
   ],
-  head: {
-    link: [
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' },
-    ],
-    script: [
-      { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', body: true },
-    ],
+
+  vite: {
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: process.env.NODE_ENV === 'production',
+          drop_debugger: true,
+          pure_funcs: process.env.NODE_ENV === 'production' ? ['console.log'] : [],
+        },
+        mangle: true,
+        format: {
+          comments: false,
+        },
+      },
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['vue', 'vue-router'],
+          },
+          chunkFileNames: 'js/[name]-[hash].js',
+          entryFileNames: 'js/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]',
+        },
+      },
+    },
+  },
+
+  // PostCSS configuration
+  postcss: process.env.NODE_ENV === 'production' ? {
+    plugins: {
+      cssnano: {
+        preset: ['default', {
+          discardComments: {
+            removeAll: true,
+          },
+          normalizeWhitespace: true,
+          minifyFontValues: true,
+          minifyGradients: true,
+        }],
+      },
+      autoprefixer: {},
+    },
+  } : {
+    plugins: {
+      cssnano: {
+        preset: ['default', {
+          discardComments: {
+            removeAll: true,
+          },
+          normalizeWhitespace: true,
+          minifyFontValues: true,
+          minifyGradients: true,
+        }],
+      },
+      autoprefixer: {},
+    },
   },
 
 })
