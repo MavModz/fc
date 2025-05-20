@@ -1,0 +1,121 @@
+.document-card {
+    box-shadow: 0px 3.75px 58.11px 0px #99abc62e;
+    background: #ffff;
+    max-width: 400px !important;
+    padding: 20px 0px 10px;
+    border-radius: 20px;
+    margin: 20px!important;
+  }
+  
+  .underline {
+    text-decoration: underline !important;
+    color: #aaa6b9;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .underline:hover {
+    color: #ff5757;
+    text-decoration: underline !important;
+  }
+  
+  .card-left-heading > h5 {
+    color: #150a33;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .card-left-heading > p {
+    color: #524b6b;
+    margin: 0;
+  }
+  
+  .status-shared {
+   color: #01B574;
+   font-weight: 700;
+   text-transform: uppercase;
+  }
+  .ifshared{
+color: #909090;
+font-size: 14px;
+
+  }
+
+  .status-requested {
+    color: #ff5757;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .light-red {
+    background: #ff57571a;
+    padding: 8px 12px;
+    border-radius: 30px;
+    color: #f22c15;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .light-red > img {
+    width: 15px;
+  }
+  .request-shared{
+    border: 1px solid #90909080;
+    padding: 6px 10px;
+    background-color: #ffffff;
+    border-radius: 90px;
+  }
+  .light-grey {
+    background: #ececec;
+    border: 1px solid #ececec;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: #3c3c3c;
+    font-weight: 400;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+  
+  /* Styles for the disabled button */
+  .light-grey:disabled {
+    background-color: transparent; /* Gray background for disabled state */
+    color: #909090; /* Lighter text color for disabled state */
+    cursor: not-allowed; /* Indicate that the button is disabled */
+    border: 1px solid #c7c7c7; /* Optional border for the disabled button */
+  }
+  
+  
+  .light-grey > img {
+    width: 16px;
+  }
+  .light-grey > i {
+   font-size: 14px;
+   color: #000;
+  }
+  .light-cool-grey {
+    background: #5d6b981a;
+    padding: 6px 12px;
+    border-radius: 30px;
+    color: #5d6b98;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+  span > .arrow-down {
+    width: 15px;
+  }
+  .revoke-access-text{
+    background: linear-gradient(135deg, #696868 0%, #191818 100%);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 4px 7px;
+text-align: center;
+  }
+  
